@@ -91,7 +91,7 @@ body{
     background-image: url("Luffy.png");
     background-size: cover;
     background-position: center;
-    margin-bottom: 5px solid red;
+    border-bottom: 10px solid gold;
 }
 .banner .container{
     display: flex;
@@ -127,4 +127,33 @@ body{
     font-size: 50px;
     color: gold;
     margin-top: 30px;
+}
+
+
+.sobre{
+    height: 700px;
+    background-color: #78c7ed;
+}
+.container2{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.textoSobre{
+    margin-top: 100px;
+    color: black;
+    width: 500px;
+}
+.textoSobre h1{
+    color: gold;
+    font-size: 60px;
+    margin-bottom: 50px;
+}
+.textoSobre p{
+    font-size: 28px;
+}
+.imgSobre img{
+    width: 500px;
+    border-radius: 20px;
 }
