@@ -7,31 +7,56 @@
 .header {
     background-color: black;
     width: 100%;
-    height: 70px;
+    height: 90px;
 
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    border-bottom: 5px solid orange;
-    border-top: 5px solid red;
+    border-bottom: 5px solid gold;
 }
 
-.body{
+body{
     background-color: black;
     font-family: 'Times New Roman', Times, serif;
 }
 .container{
-    width: 85%;
+    width: 100%;
     margin: auto;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: 100%;
 }
+
+
 .titulo{
+    font-family: 'Times New Roman', Times, serif;
     color: orange;
     font-size: 40px;
+    letter-spacing: 4px;
+    -webkit-text-stroke: 1px gold;
+    margin-right: 70px;
 }
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-right: 60px;
+}
+.logo img{
+    width: 90px;
+    height: 60px;
+}
+.avatar{
+    margin-left: auto;
+    margin-right: 20px;
+}
+.avatar img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid gold;
+}
+
 .navbar{
     list-style: none;
     display: flex;
@@ -45,14 +70,57 @@
 }
 .navbar a:hover{
     color: orange;
+    transform: scale(1.05);
+    transition: 0.3s;
 }
 .agora a{
     font-weight: bold;
     color: orange
 }
-.logo{
-    margin-right: 60px;
-}
+
 .hover{
     color: orange
+}
+
+
+
+.banner{
+    height: 700px;
+    display: flex;
+    align-items: center;
+    background-image: url("Luffy.png");
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 5px solid red;
+}
+.banner .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.textoDestaque{
+    background-color: rgba(0, 0, 0, 0.401);
+    width: 500px;
+    height: 500px;
+    padding: 40px;
+    border-radius: 20px;
+    margin-left: 30px;
+}
+.textoDestaque h1{
+    font-size: 70px;
+    color: gold;
+    margin-bottom: 30px;
+}
+.textoDestaque p{
+    text-align: center;
+    font-size: 26px;
+    color: white;
+    margin-bottom: 30px;
+}
+.seta{
+    text-align: center;
+    font-size: 50px;
+    color: gold;
+    margin-top: 30px;
 }
