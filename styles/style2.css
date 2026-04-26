@@ -1,0 +1,112 @@
+/* Adicionar aqui toda a estilização criada para sua aplicação. */
+.header {
+  background-color: #000407;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px; 
+  z-index: 1000;
+
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+    border-bottom:3px solid #00c2d1;
+}
+.navbar{
+    list-style: none;
+    display:flex;
+    gap: 15px;
+    align-items: center;
+        color: #d6b26b;
+}
+.navbar a{
+    color: #d6b26b;
+}
+.header .container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+}
+body {
+  margin: 0;
+  padding-top: 100px;
+  font-family: Arial, sans-serif;
+  background-image: url(../assets/imgs/bg-jelly-fish-para_outras_pags.png);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* ESSENCIAL */
+}
+.agora a{
+    font-weight: bold;
+}
+.card-login{
+    background-color: #e5e5e5;
+    border-radius: 10px;
+    width: 600px;
+    height: 250px;
+    padding: 25px;
+    text-align: center;
+    justify-content: center;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card-login h2{
+    font-size: 28px;
+    font-weight: bold;
+}
+.botao{
+    background-color: #e8155b;
+    color: aliceblue;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+}
+.campo{
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+}
+.campo input{
+    border-color: #4aafc7;
+    width: 390px;
+    height: 35px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.campo input::placeholder{
+    text-align: center;
+    font-size: 15px;
+}
+.campo span{
+    font-size: 12px;
+}
+.colorRosa{
+    color: #ff4f87;
+}
+.titulo {
+  font-size: 32px;
+  color: aqua;
+  font-weight: normal;
+}
+.container h4 {
+    display: flex;
+    align-items: flex-end;
+}
+.footer {
+  background-color: #00c2d1;
+  text-align: center;
+  padding: 10px;
+}
