@@ -106,20 +106,24 @@ body{
     padding: 40px;
     border-radius: 20px;
     margin-left: 30px;
+    text-align: center;
 }
 .textoDestaque h1{
-    font-size: 70px;
+    font-size: 55px;
     color: gold;
+    margin-top: 30px;
     margin-bottom: 30px;
 }
+.textoDestaque img{
+    width: 300px;
+    height: 95px;
+}
 .textoDestaque p{
-    text-align: center;
     font-size: 26px;
     color: white;
     margin-bottom: 30px;
 }
 .seta{
-    text-align: center;
     font-size: 50px;
     color: gold;
     margin-top: 30px;
