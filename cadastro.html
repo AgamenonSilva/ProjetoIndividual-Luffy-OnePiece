@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Luffy | Cadastro </title>
 
-  <title>AquaTech | Cadastro</title>
-
-  <link rel="stylesheet" href="styles/style1.css" />
-  <link rel="icon" href="assets/icon/favicon2.ico" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link rel="stylesheet" href="styleCadastro.css">
+  <link rel="icon" href="logo.png">
 </head>
 
 <body>
-  <!--header inicio-->
+
   <div class="header">
     <div class="container">
-      <h1 class="titulo">AquaTech</h1>
+      <div class="logo">
+        <img src="Logo.png">
+        <h1 class="titulo">Luffy</h1>
+      </div>
       <ul class="navbar">
         <li>
-          <a href="index.html">Inicial</a>
+          <a href="Home.html">Home</a>
         </li>
         <li>
-          <a href="simulador.html">Simulador</a>
+          <a href="dashboards.html">Dashboards</a>
         </li>
-        <li>|</li>
+        <li><a> | </a></li>
         <li>
           <a href="login.html">Login</a>
         </li>
@@ -33,50 +33,108 @@
           <a href="#">Cadastro</a>
         </li>
       </ul>
-    </div>
-  </div>
-  <!--header fim-->
-
-  <div class="login">
-
-    <div class="container">
-      <div class="card card-cadastro colorRosa">
-        <h2>Bem-vindo!</h2>
-        <div class="formulario">
-          <div class="campo">
-            <span>Código de ativação:<br></span>
-            <input id="codigo_input" type="text" placeholder="Insira aqui seu código" />
-          </div>
-          <div class="campo">
-            <span>Nome:<br></span>
-            <input id="nome_input" type="text" placeholder="Seu nome" />
-          </div>
-          <div class="campo">
-            <span>E-mail:<br></span>
-            <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
-          </div>
-          <div class="campo">
-            <span>Senha:<br></span>
-            <input id="senha_input" type="password" placeholder="******" />
-          </div>
-          <div class="campo">
-            <span>Confirmação da Senha:<br></span>
-            <input id="confirmacao_senha_input" type="password" placeholder="******" />
-          </div>
-          <button class="botao">Cadastrar</button>
-        </div>
+      <div class="avatar">
+        <img src="zoro.png" alt="">
       </div>
     </div>
   </div>
 
-  <!--footer inicio-->
-  <div class="footer">
-    <div class="container">
-      <h4>Feito com amor por Agamenon &hearts; SPTech &copy; 2024</h4>
-      <span class="version">v1.0.0</span>
+
+  <div class="containerCadastro">
+
+    <div class="textoDireitaCad">
+      <h1>Bem-vindo!</h1>
+      <p>Acompanhe os detalhes sobre o mundo em que Luffy vive <br>
+        E conheça mais sobre o personagem que se tornará o Rei dos Piratas!</p>
     </div>
+    <div class="textoEsquerdaCad">
+      <div class="campo">
+        <span>Nome Completo *</span>
+        <input type="text" id="ipt_nome" placeholder="Digite seu nome completo">
+      </div>
+
+      <div class="campo">
+        <span>E-mail *</span>
+        <input type="text" id="ipt_email" placeholder="nome@dominio.com">
+      </div>
+
+      <div class="campo">
+        <span>CPF *</span>
+        <input type="text" id="ipt_cpf" placeholder="000.000.000-00">
+      </div>
+
+      <div class="campo">
+        <span>Senha *</span>
+        <input type="password" id="ipt_pass" placeholder="Digite sua senha">
+      </div>
+
+      <div class="campo">
+        <span>Confirmar Senha *</span>
+        <input type="password" id="ipt_conpass" placeholder="Confirme sua senha">
+      </div>
+
+      <button onclick="cadastrar()" type="button" class="btn-cadastro">Cadastrar-se</button>
+
+      <div class="ja-tenho-conta">
+        Já possui uma conta? <a href="login.html">Fazer Login</a>
+      </div>
+    </div>
+
   </div>
-  <!--footer fim-->
 </body>
 
 </html>
+<script>
+  let listaNome = []
+  let listaEmail = []
+  let listaCpf = []
+  let listaSenha = []
+  function cadastrar() {
+    let Nome = ipt_nome.value;
+    let Email = ipt_email.value;
+    let CPF = ipt_cpf.value;
+    let Pass = ipt_pass.value;
+    let ConPass = ipt_conpass.value;
+    let cpfExiste = false;
+    let emailExiste = false;
+
+    for (let i = 0; i < listaCpf.length; i++) {
+
+      if (CPF == listaCpf[i]) {
+        cpfExiste = true;
+        break;
+      }
+    }
+    for (let j = 0; j < listaEmail.length; j++) {
+
+      if (Email == listaEmail[j]) {
+        emailExiste = true;
+        break;
+      }
+
+    }
+    if (Nome === "" || Email === "" || CPF === "" || Pass === "" || ConPass === "") {
+      alert("Por favor, preencha todos os campos.");
+    } else if (cpfExiste) {
+      alert("CPF já cadastrado. Por favor, insira um CPF diferente.");
+    } else if (emailExiste) {
+      alert("E-mail já cadastrado. Por favor, insira um E-mail diferente.");
+    } else if (Pass !== ConPass) {
+      alert("As senhas não coincidem. Por favor, tente novamente.");
+    }
+    else if (CPF.length !== 14) {
+      alert("CPF inválido. Por favor, insira um CPF válido");
+    } else if (!Email.includes("@") || !Email.includes(".")) {
+      alert("E-mail inválido. Por favor, insira um e-mail válido.");
+    } else if (Pass.length < 6) {
+      alert("A senha deve conter pelo menos 6 caracteres.");
+    } else {
+
+      listaNome.push(Nome);
+      listaEmail.push(Email);
+      listaCpf.push(CPF);
+      listaSenha.push(Pass);
+      alert("Cadastro realizado com sucesso!");
+    }
+  }
+</script>

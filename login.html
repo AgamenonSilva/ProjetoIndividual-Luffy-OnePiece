@@ -1,74 +1,91 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Luffy | Login </title>
 
-    <title>AquaTech | Login</title>
-
-    <link rel="stylesheet" href="styles/style2.css">
-    <link rel="icon" href="assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="styleLogin.css">
+  <link rel="icon" href="logo.png">
 </head>
 
 <body>
 
-    <!--Header-->
+  <div class="header">
+    <div class="container">
+      <div class="logo">
+        <img src="Logo.png">
+        <h1 class="titulo">Luffy</h1>
+      </div>
+      <ul class="navbar">
+        <li>
+          <a href="Home.html">Home</a>
+        </li>
+        <li>
+          <a href="dashboards.html">Dashboards</a>
+        </li>
+        <li><a> | </a></li>
+        <li class="agora">
+          <a href="#">Login</a>
+        </li>
+        <li >
+          <a href="cadastro.html">Cadastro</a>
+        </li>
+      </ul>
+      <div class="avatar">
+        <img src="sanji.png" alt="">
+      </div>
+    </div>
+  </div>
 
-    <div class="header">
-        <div class="container">
-            <h1 class="titulo">AquaTech</h1>
-            <ul class="navbar">
-                <li>
-                    <a href="index.html">Inicial</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
-                </li>
-                <li>|</li>
-                <li class="agora">
-                    <a href="#">Login</a>
-                </li>
-                <li>
-                    <a href="cadastro.html">Cadastro</a>
-                </li>
-            </ul>
-        </div>
+
+  <div class="containerLogin">
+
+    <div class="textoDireitaLogin">
+      <h1>Bem-vindo de Volta!</h1>
+      <p>Entre novamente e continue explorando o universo de Luffy!</p>
+    </div>
+    <div class="textoEsquerdaLogin">
+
+      <div class="campo">
+        <span>E-mail *</span>
+        <input type="text" id="ipt_email" placeholder="nome@dominio.com">
+      </div>
+
+      <div class="campo">
+        <span>Senha *</span>
+        <input type="password" id="ipt_pass" placeholder="Digite sua senha">
+      </div>
+
+      <button onclick="fazerLogin()" type="button" class="btn-login">Fazer Login</button>
+
+      <div class="nao-tenho-conta">
+        Não possui uma conta? <a href="cadastro.html">Cadastrar-se</a>
+      </div>
     </div>
 
-
-    <div class="login">
-  
-        <div class="container">
-            <div class="card card-login">
-                <h2>Olá de volta!</h2>
-                <div class="formulario">
-                    <div class="campo">
-                        <span>E-mail:</span>
-                        <input id="email_input" type="text" placeholder="Login">
-                    </div>
-                    <div class="campo">
-                        <span>Senha:</span>
-                        <input id="senha_input" type="password" placeholder="******">
-                    </div>
-                    <button class="botao">Entrar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!--footer inicio-->
-    <div class="footer">
-        <div class="container">
-            <h4>Feito com amor por Agamenon &hearts; SPTech &copy; 2024</h4>
-            <span class="version">v1.0.0</span>
-        </div>
-    </div>
-    <!--footer fim-->
-
+  </div>
 </body>
 
 </html>
+<script>
+  let listaNome = []
+  let listaEmail = []
+  let listaCpf = []
+  let listaSenha = []
+  function fazerLogin() {
+    let Email = ipt_email.value;
+    let Pass = ipt_pass.value;
+
+    if (Email === "" || Pass === "") {
+      alert("Por favor, preencha todos os campos.");
+    }
+        else if (!Email.includes("@") || !Email.includes(".com")) {
+      alert("Por favor, insira um e-mail válido.");
+    }
+    else {
+      alert("Login bem-sucedido!");
+    }
+  }
+</script>
