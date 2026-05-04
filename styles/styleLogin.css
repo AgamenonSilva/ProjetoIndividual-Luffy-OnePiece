@@ -85,7 +85,7 @@ body{
 
 
 .containerLogin{
-    background-image: url(backgroundLogin.png);
+    background-image: url(../img/backgroundLogin.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

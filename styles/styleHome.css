@@ -90,7 +90,7 @@ body{
 
     display: flex;
     align-items: center;
-    background-image: url("Luffy.png");
+    background-image: url("../img/Luffy.png");
     background-size: cover;
     background-position: center;
     border-bottom: 10px solid gold;
