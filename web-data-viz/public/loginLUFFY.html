@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Luffy | Login </title>
+
+  <link rel="stylesheet" href="styles/styleLogin.css">
+  <link rel="icon" href="img/logo.png">
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="container">
+      <div class="logo">
+        <img src="img/logo.png">
+        <h1 class="titulo">Luffy</h1>
+      </div>
+      <ul class="navbar">
+        <li>
+          <a href="Home.html">Home</a>
+        </li>
+        <li>
+          <a href="dashboards.html">Dashboards</a>
+        </li>
+        <li><a> | </a></li>
+        <li class="agora">
+          <a href="#">Login</a>
+        </li>
+        <li >
+          <a href="cadastro.html">Cadastro</a>
+        </li>
+      </ul>
+      <div class="avatar">
+        <img src="img/sanji.png" alt="">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="containerLogin">
+
+    <div class="textoDireitaLogin">
+      <h1>Bem-vindo de Volta!</h1>
+      <p>Entre novamente e continue explorando o universo de Luffy!</p>
+    </div>
+    <div class="textoEsquerdaLogin">
+
+      <div class="campo">
+        <span>E-mail *</span>
+        <input type="text" id="ipt_email" placeholder="nome@dominio.com">
+      </div>
+
+      <div class="campo">
+        <span>Senha *</span>
+        <input type="password" id="ipt_pass" placeholder="Digite sua senha">
+      </div>
+
+      <button onclick="fazerLogin()" type="button" class="btn-login">Fazer Login</button>
+
+      <div class="nao-tenho-conta">
+        Não possui uma conta? <a href="cadastro.html">Cadastrar-se</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
+<script>
+  let listaNome = []
+  let listaEmail = []
+  let listaCpf = []
+  let listaSenha = []
+  function fazerLogin() {
+    let Email = ipt_email.value;
+    let Pass = ipt_pass.value;
+
+    if (Email === "" || Pass === "") {
+      alert("Por favor, preencha todos os campos.");
+    }
+        else if (!Email.includes("@") || !Email.includes(".com")) {
+      alert("Por favor, insira um e-mail válido.");
+    }
+    else {
+      alert("Login bem-sucedido!");
+    }
+  }
+</script>
