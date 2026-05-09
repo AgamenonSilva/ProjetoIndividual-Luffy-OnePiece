@@ -50,27 +50,32 @@
     <div class="textoEsquerdaCad">
       <div class="campo">
         <span>Nome Completo *</span>
-        <input type="text" id="ipt_nome" placeholder="Digite seu nome completo">
+        <input type="text" id="ipt_nome" placeholder="Digite seu nome completo" oninput="validarNome()">
+        <div class="div_erro" id="div_nome"></div>
       </div>
 
       <div class="campo">
         <span>E-mail *</span>
-        <input type="text" id="ipt_email" placeholder="nome@dominio.com">
+        <input type="text" id="ipt_email" placeholder="nome@dominio.com" oninput="validarEmail()">
+        <div class="div_erro" id="div_email"></div>
       </div>
 
       <div class="campo">
         <span>CPF *</span>
-        <input type="text" id="ipt_cpf" placeholder="000.000.000-00">
+        <input type="text" id="ipt_cpf" placeholder="000.000.000-00" oninput="validarCpf()">
+        <div class="div_erro" id="div_cpf"></div>
       </div>
 
       <div class="campo">
         <span>Senha *</span>
-        <input type="password" id="ipt_pass" placeholder="Digite sua senha">
+        <input type="password" id="ipt_senha" placeholder="Digite sua senha" oninput="validarSenha()">
+        <div class="div_erro" id="div_senha"></div>
       </div>
 
       <div class="campo">
         <span>Confirmar Senha *</span>
-        <input type="password" id="ipt_conpass" placeholder="Confirme sua senha">
+        <input type="password" id="ipt_confSenha" placeholder="Confirme sua senha" oninput="validarConfSenha()">
+        <div class="div_erro" id="div_confSenha"></div>
       </div>
 
       <button onclick="cadastrar()" type="button" class="btn-cadastro">Cadastrar-se</button>
@@ -85,56 +90,111 @@
 
 </html>
 <script>
-  let listaNome = []
-  let listaEmail = []
-  let listaCpf = []
-  let listaSenha = []
-  function cadastrar() {
-    let Nome = ipt_nome.value;
-    let Email = ipt_email.value;
-    let CPF = ipt_cpf.value;
-    let Pass = ipt_pass.value;
-    let ConPass = ipt_conpass.value;
-    let cpfExiste = false;
-    let emailExiste = false;
+  let validacaoNome = false;
+  let validacaoEmail = false;
+  let validacaoCpf = false;
+  let validacaoSenha = false;
+  let validacaoConfSenha = false;
 
-    for (let i = 0; i < listaCpf.length; i++) {
-
-      if (CPF == listaCpf[i]) {
-        cpfExiste = true;
-        break;
-      }
-    }
-    for (let j = 0; j < listaEmail.length; j++) {
-
-      if (Email == listaEmail[j]) {
-        emailExiste = true;
-        break;
-      }
-
-    }
-    if (Nome === "" || Email === "" || CPF === "" || Pass === "" || ConPass === "") {
-      alert("Por favor, preencha todos os campos.");
-    } else if (cpfExiste) {
-      alert("CPF já cadastrado. Por favor, insira um CPF diferente.");
-    } else if (emailExiste) {
-      alert("E-mail já cadastrado. Por favor, insira um E-mail diferente.");
-    } else if (Pass !== ConPass) {
-      alert("As senhas não coincidem. Por favor, tente novamente.");
-    }
-    else if (CPF.length !== 14) {
-      alert("CPF inválido. Por favor, insira um CPF válido");
-    } else if (!Email.includes("@") || !Email.includes(".")) {
-      alert("E-mail inválido. Por favor, insira um e-mail válido.");
-    } else if (Pass.length < 6) {
-      alert("A senha deve conter pelo menos 6 caracteres.");
+  function validarNome() {
+    let nome = ipt_nome.value
+    
+    if (nome.length >= 3) {
+        validacaoNome = true;
+        div_nome.innerHTML = "";
     } else {
-
-      listaNome.push(Nome);
-      listaEmail.push(Email);
-      listaCpf.push(CPF);
-      listaSenha.push(Pass);
-      alert("Cadastro realizado com sucesso!");
+        validacaoNome = false;
+        div_nome.innerHTML = 'Digite um nome válido (mínimo 3 caracteres)';
+    }
+}
+  function validarEmail() {
+    let email = ipt_email.value;
+    if (email.includes("@") && email.includes(".")) {
+      validacaoEmail = true;
+      div_email.innerHTML = "";
+    } else {
+      validacaoEmail = false;
+      div_email.innerHTML = "Digite um e-mail válido";
     }
   }
+  function validarCpf() {
+    let cpf = ipt_cpf.value;
+    if (cpf.length === 14) {
+      validacaoCpf = true;
+      div_cpf.innerHTML = "";
+    } else {
+      validacaoCpf = false;
+      div_cpf.innerHTML = "Digite um CPF válido (formato: 000.000.000-00)";
+    }
+  }
+  function validarSenha() {
+    let senha = ipt_senha.value;
+    if (senha.length >= 6) {
+      validacaoSenha = true;
+      div_senha.innerHTML = "";
+    } else {
+      validacaoSenha = false;
+      div_senha.innerHTML = "A senha deve conter pelo menos 6 caracteres";
+    }
+  }
+  function validarConfSenha() {
+    let confSenha = ipt_confSenha.value;
+    if (confSenha === ipt_senha.value) {
+      validacaoConfSenha = true;
+      div_confSenha.innerHTML = "";
+    } else {
+      validacaoConfSenha = false;
+      div_confSenha.innerHTML = "As senhas não coincidem";
+    }
+  }
+
+let listaNome = [];
+let listaEmail = [];
+let listaCpf = [];
+let listaSenha = [];
+
+function cadastrar() {
+
+  if (!validacaoNome || !validacaoEmail || !validacaoCpf || !validacaoSenha || !validacaoConfSenha) {
+    alert("Preencha todos os campos corretamente!");
+  }
+
+  let Nome = ipt_nome.value;
+  let Email = ipt_email.value;
+  let CPF = ipt_cpf.value;
+  let Senha = ipt_senha.value;
+
+  let cpfExiste = false;
+  let emailExiste = false;
+
+  for (let i = 0; i < listaCpf.length; i++) {
+    if (CPF === listaCpf[i]) {
+      cpfExiste = true;
+      break;
+    }
+  }
+
+  for (let i = 0; i < listaEmail.length; i++) {
+    if (Email === listaEmail[i]) {
+      emailExiste = true;
+      break;
+    }
+  }
+
+  if (cpfExiste) {
+    alert("CPF já cadastrado.");
+  }
+
+  if (emailExiste) {
+    alert("E-mail já cadastrado.");
+  }
+
+
+  listaNome.push(Nome);
+  listaEmail.push(Email);
+  listaCpf.push(CPF);
+  listaSenha.push(Senha);
+
+  alert("Cadastro realizado com sucesso!");
+}
 </script>
