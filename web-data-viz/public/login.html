@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title> Luffy | Login </title>
 
-  <link rel="stylesheet" href="styles/styleLogin.css">
-  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/styleLogin.css">
+  <link rel="icon" href="assets/imgs/logo.png">
 </head>
 
 <body>
@@ -15,26 +15,26 @@
   <div class="header">
     <div class="container">
       <div class="logo">
-        <img src="img/logo.png">
+        <img src="assets/imgs/logo.png">
         <h1 class="titulo">Luffy</h1>
       </div>
       <ul class="navbar">
         <li>
-          <a href="Home.html">Home</a>
+          <a href="index.html">Home</a>
         </li>
         <li>
-          <a href="dashboards.html">Dashboards</a>
+          <a href="dashboardLUFFY.html">Dashboards</a>
         </li>
         <li><a> | </a></li>
         <li class="agora">
           <a href="#">Login</a>
         </li>
-        <li >
+        <li>
           <a href="cadastro.html">Cadastro</a>
         </li>
       </ul>
       <div class="avatar">
-        <img src="img/sanji.png" alt="">
+        <img src="assets/imgs/sanji.png" alt="">
       </div>
     </div>
   </div>
@@ -70,22 +70,60 @@
 
 </html>
 <script>
-  let listaNome = []
-  let listaEmail = []
-  let listaCpf = []
-  let listaSenha = []
   function fazerLogin() {
+
     let Email = ipt_email.value;
     let Pass = ipt_pass.value;
 
-    if (Email === "" || Pass === "") {
-      alert("Por favor, preencha todos os campos.");
+    if (Email == "" || Pass == "") {
+      alert("Preencha todos os campos!");
+      return;
     }
-        else if (!Email.includes("@") || !Email.includes(".com")) {
-      alert("Por favor, insira um e-mail válido.");
-    }
-    else {
-      alert("Login bem-sucedido!");
-    }
+
+    fetch("/usuarios/autenticar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        emailServer: Email,
+        senhaServer: Pass
+      })
+
+    })
+
+      .then(function (resposta) {
+
+        console.log("Resposta:", resposta);
+
+        if (resposta.ok) {
+
+          resposta.json().then(function (json) {
+
+            console.log(json);
+
+            sessionStorage.EMAIL_USUARIO = json.email;
+            sessionStorage.NOME_USUARIO = json.nome;
+            sessionStorage.ID_USUARIO = json.idUsuario;
+
+            alert("Login realizado com sucesso!");
+
+            window.location = "dashboardLUFFY.html";
+
+          });
+
+        } else {
+
+          alert("Email ou senha inválidos!");
+
+        }
+
+      })
+
+      .catch(function (erro) {
+        console.log(erro);
+      });
+
   }
 </script>
