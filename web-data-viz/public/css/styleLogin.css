@@ -85,7 +85,9 @@ body{
 
 
 .containerLogin{
-    background-image: url(../assets/imgs/backgroundLogin.png);
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url(../assets/imgs/backgroundLogin.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -153,16 +155,18 @@ body{
 .btn-login{
     width: 150px;
     height: 45px;
-    background-color: orange;
+    background-color: gold;
     color: black;
-    font-size: 18px;
+    font-size: 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     margin: auto;
+    transition: 0.3s;
 }
 .btn-login:hover{
     background-color: gold;
+    transform: scale(1.05);
 }
 .nao-tenho-conta{
     margin-top: 20px;
@@ -173,4 +177,9 @@ body{
     color: orange;
     text-decoration: none;
     font-size: 30px;
+    transition: 0.3s;
+}
+.nao-tenho-conta a:hover{
+    color: gold;
+    transform: scale(1.05);
 }

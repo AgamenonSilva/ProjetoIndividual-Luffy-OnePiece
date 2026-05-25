@@ -2,86 +2,554 @@
 <html lang="pt-br">
 
 <head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaTech | Dashboards</title>
 
-    <title>AquaTech | Simulador</title>
 
-    <link rel="stylesheet" href="styles/styleDashboard.css">
-    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/estilo.css" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!--FONT AWESOME-->
+    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
 </head>
+
+<!-- <body onload=" atualizarFeed()"> -->
 
 <body>
 
-    <!--header inicio-->
-    <div class="header">
-    <div class="container">
-      <div class="logo">
-        <img src="img/logo.png">
-        <h1 class="titulo">Luffy</h1>
-      </div>
-      <ul class="navbar">
-        <li>
-          <a href="Home.html">Home</a>
-        </li>
-        <li class="agora">
-          <a href="dashboards.html">Dashboards</a>
-        </li>
-        <li><a> | </a></li>
-        <li>
-          <a href="login.html">Login</a>
-        </li>
-        <li >
-          <a href="cadastro.html">Cadastro</a>
-        </li>
-      </ul>
-      <div class="avatar">
-        <img src="img/sanji.png" alt="">
-      </div>
-    </div>
-  </div>
+    <div class="janela">
+        <div class="header-left">
+            <h1>Monkey D. Luffy</h1>
 
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
 
-    <!-- simulador inicio -->
-    <div class="simulador">
-        <div class="container">
-            <h2>Simulador</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium tempora architecto sint fugit
-                dolorum? Ipsum laborum magnam similique labore, voluptate amet reprehenderit rem ab blanditiis quisquam
-                laboriosam eaque alias. Reiciendis. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Accusantium tempora architecto sint fugit dolorum? Ipsum laborum magnam similique labore, voluptate amet
-                reprehenderit rem ab blanditiis quisquam laboriosam eaque alias. Reiciendis.</p>
+            <div class="btn-nav-white" onclick="abrirQuiz()">
+                <h3>Quiz</h3>
+            </div>
+
+            <div class="btn-nav">
+
+                <h3>Progresso</h3>
+
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./mural.html">
+                    <h3>Coleção de Cenas</h3>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
 
         </div>
-    </div>
-    <!-- simulador fim -->
 
-    <!--footer inicio-->
-    <div class="footer">
-        <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-            <span class="version">v1.0.0</span>
-        </div>
-    </div>
-    <!--footer fim-->
+        <div class="dash">
+            <div class="kpis">
+                <div id="kpi_personagem"></div>
+                <div id="kpi_episodio"></div>
+                <div id="kpi_personalidade"></div>
+            </div>
+            <div class="area-graficos">
+                <div class="grafico-card">
+                    <h2>Progresso na Jornada</h2>
+                    <canvas id="graficoProgresso"></canvas>
+                </div>
+
+                <div class="grafico-card mini-card">
+
+                    <div class="info-extra">
+                        <p>
+                            <strong>Arco Atual</strong><br>
+                            <span id="texto_arco"></span>
+                        </p>
+                        <p>
+                            <strong>Episódios Restantes</strong><br>
+                            <span id="texto_restante"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
 
+            <div id="quizModal" class="quiz-modal">
+
+                <div class="quiz-box">
+
+                    <h2 class="quiz-titulo">Perfil de Pirata</h2>
+
+                    <div class="quiz-campo">Personagem favorito</div>
+                    <input type="text" id="favPersonagem">
+
+                    <div class="quiz-campo">Episódio atual</div>
+                    <input type="number" id="episodioAtual">
+
+                    <div class="quiz-campo">Personalidade do Luffy</div>
+                    <select id="personalidadeLuffy">
+                        <option value="ALEGRE">Alegre</option>
+                        <option value="CORAJOSO">Corajoso</option>
+                        <option value="LEAL">Leal</option>
+                        <option value="TEIMOSO">Teimoso</option>
+                        <option value="IMPULSIVO">Impulsivo</option>
+                        <option value="DETERMINADO">Determinado</option>
+                        <option value="PROTETOR">Protetor da tripulação</option>
+                    </select>
+
+                    <button onclick="salvarQuiz()">Salvar Dados</button>
+                    <button onclick="fecharQuiz()" style="background:red;">Fechar</button>
+
+                </div>
+
+            </div>
+            <div class="graficos-inferiores">
+
+                <div class="grafico-card">
+                    <h2>Progresso por Arco</h2>
+                    <canvas id="graficoArcos"></canvas>
+                </div>
+
+                <div class="grafico-card">
+                    <h2>Perfil do Pirata</h2>
+                    <canvas id="graficoPersonalidade" width="200" height="200"></canvas>
+                </div>
+            </div>
+            <script>
+                document.getElementById("b_usuario").innerHTML =
+                    sessionStorage.NOME_USUARIO;
+
+                let proximaAtualizacao;
+
+                window.onload = function () {
+                    atualizarKPIs();
+                    let episodio = Number(sessionStorage.getItem("episodioAtual"));
+                    if (episodio) {
+                        gerarGraficoProgresso(episodio);
+                        gerarGraficoArcos(episodio);
+                    }
+
+                    carregarPersonalidade();
+                };
+                // O gráfico é construído com três funções:
+                // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
+                // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
+                // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
+
+                // Esta função *obterDadosGrafico* busca os últimos dados inseridos em tabela de medidas.
+                // para, quando carregar o gráfico da primeira vez, já trazer com vários dados.
+                // A função *obterDadosGrafico* também invoca a função *plotarGrafico*
+
+                //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
+                //     Para ajustar o "select", ajuste o comando sql em src/models
+                let chartProgresso;
+                function gerarGraficoProgresso(episodioAtual) {
+
+                    let episodiosTotais = 1155;
+                    let restante = episodiosTotais - episodioAtual;
+                    document.getElementById("texto_arco").innerHTML =
+                        definirArco(episodioAtual);
+
+                    document.getElementById("texto_restante").innerHTML =
+                        restante + " episódios";
+                    let dados = [];
+                    let labels = [];
+
+                    for (let i = 1; i <= episodioAtual; i += 50) {
+
+                        labels.push("Ep " + i);
+
+                        dados.push(i);
+
+                    }
+
+                    labels.push("Atual");
+                    dados.push(episodioAtual);
+
+                    if (chartProgresso) {
+                        chartProgresso.destroy();
+                    }
+
+                    chartProgresso = new Chart(document.getElementById("graficoProgresso"), {
+
+                        type: 'line',
+
+                        data: {
+
+                            labels: labels,
+
+                            datasets: [{
+                                label: 'Episódios Assistidos',
+                                data: dados,
+                                borderColor: 'gold',
+                                backgroundColor: 'rgba(255,215,0,0.2)',
+                                fill: true,
+                                tension: 0.4,
+                                borderWidth: 4,
+                                pointBackgroundColor: '#fff',
+                                pointBorderColor: 'gold',
+                                pointRadius: 5
+
+                            }]
+                        },
+                        options: {
+
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        color: 'white'
+                                    }
+                                }
+                            },
+
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        color: 'white'
+                                    }
+                                },
+
+                                y: {
+                                    ticks: {
+                                        color: 'white'
+                                    }
+                                }
+
+                            }
+
+                        }
+
+                    });
+
+                }
+                let chartPersonalidade;
+
+                function gerarGraficoPersonalidade(dados) {
+
+                    let labels = dados.map(d => d.personalidade);
+                    let valores = dados.map(d => d.total);
+
+                    if (chartPersonalidade) {
+                        chartPersonalidade.destroy();
+                    }
+
+                    chartPersonalidade = new Chart(
+                        document.getElementById("graficoPersonalidade"),
+                        {
+                            type: 'radar',
+
+                            data: {
+                                labels: labels,
+
+                                datasets: [{
+                                    label: 'Personalidades do Luffy',
+                                    data: valores,
+
+                                    backgroundColor: 'rgba(255,215,0,0.25)',
+                                    borderColor: 'gold',
+                                    borderWidth: 5,
+                                    pointBackgroundColor: '#fff',
+                                    pointBorderColor: 'gold',
+                                    pointRadius: 5
+                                }]
+                            },
+
+                            options: {
+
+                                responsive: true,
+
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: 'white'
+                                        }
+                                    }
+                                },
+
+                                scales: {
+                                    r: {
+                                        suggestedMin: 0,
+                                        suggestedMax: 5,
+
+                                        angleLines: {
+                                            color: 'rgba(255,255,255,0.2)'
+                                        },
+
+                                        grid: {
+                                            color: 'rgba(255,255,255,0.2)'
+                                        },
+
+                                        pointLabels: {
+                                            color: 'white',
+                                            font: {
+                                                size: 20
+                                            }
+                                        },
+
+                                        ticks: {
+                                            color: 'white',
+                                            backdropColor: 'transparent'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    );
+                }
+                let chartArcos;
+
+                function gerarGraficoArcos(episodioAtual) {
+
+                    let arcos = [
+
+                        { nome: "East Blue", inicio: 1, fim: 61 },
+                        { nome: "Alabasta", inicio: 62, fim: 143 },
+                        { nome: "Skypiea", inicio: 144, fim: 206 },
+                        { nome: "Water 7", inicio: 229, fim: 263 },
+                        { nome: "Enies Lobby", inicio: 264, fim: 336 },
+                        { nome: "Thriller Bark", inicio: 337, fim: 381 },
+                        { nome: "Marineford", inicio: 408, fim: 516 },
+                        { nome: "Dressrosa", inicio: 579, fim: 750 },
+                        { nome: "Whole Cake", inicio: 783, fim: 891 },
+                        { nome: "Wano", inicio: 892, fim: 1088 },
+                        { nome: "Egghead", inicio: 1089, fim: 1155 }
+
+                    ];
+
+                    let labels = [];
+                    let progresso = [];
+
+                    for (let arco of arcos) {
+
+                        labels.push(arco.nome);
+
+                        let porcentagem = 0;
+
+                        if (episodioAtual >= arco.fim) {
+
+                            porcentagem = 100;
+
+                        }
+
+                        else if (
+                            episodioAtual >= arco.inicio &&
+                            episodioAtual < arco.fim
+                        ) {
+
+                            let totalArco = arco.fim - arco.inicio;
+
+                            let progressoAtual =
+                                episodioAtual - arco.inicio;
+
+                            porcentagem =
+                                (progressoAtual / totalArco) * 100;
+                        }
+
+                        else {
+
+                            porcentagem = 0;
+                        }
+
+                        progresso.push(porcentagem);
+                    }
+
+                    if (chartArcos) {
+                        chartArcos.destroy();
+                    }
+
+                    chartArcos = new Chart(
+                        document.getElementById("graficoArcos"),
+                        {
+                            type: 'bar',
+
+                            data: {
+                                labels: labels,
+
+                                datasets: [{
+                                    label: 'Conclusão do Arco (%)',
+                                    data: progresso,
+
+                                    backgroundColor: progresso.map(valor => {
+
+                                        if (valor >= 100) {
+                                            return "#22c55e";
+                                        }
+
+                                        if (valor > 0) {
+                                            return "#facc15";
+                                        }
+
+                                        return "#374151";
+                                    }),
+
+                                    borderRadius: 8,
+                                    barThickness: 14
+                                }]
+                            },
+
+                            options: {
+
+                                indexAxis: 'y',
+
+                                responsive: true,
+
+
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: 'white'
+                                        }
+                                    }
+                                },
+
+                                scales: {
+
+                                    x: {
+                                        max: 100,
+
+                                        ticks: {
+                                            color: 'white',
+
+                                            callback: value => value + "%"
+                                        }
+                                    },
+
+                                    y: {
+                                        ticks: {
+                                            color: 'white',
+                                            font: {
+                                                size: 11
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    );
+                }
+                function carregarPersonalidade() {
+
+                    fetch(`/quiz/estatisticas/${sessionStorage.ID_USUARIO}`)
+                        .then(res => res.json())
+                        .then(dados => {
+                            gerarGraficoPersonalidade(dados);
+                        });
+                }
+                // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+                // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
+                // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+                // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
+                // buscando a última medida inserida em tabela contendo as capturas, 
+
+                //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
+                //     Para ajustar o "select", ajuste o comando sql em src/models
+                function abrirQuiz() {
+                    document.getElementById("quizModal").style.display = "flex";
+                    document.getElementById("favPersonagem").value = sessionStorage.getItem("favPersonagem") || "";
+                    document.getElementById("episodioAtual").value = sessionStorage.getItem("episodioAtual") || "";
+                    document.getElementById("personalidadeLuffy").value = sessionStorage.getItem("personalidadeLuffy") || "";
+                }
+                function fecharQuiz() {
+                    document.getElementById("quizModal").style.display = "none";
+                }
+                function salvarQuiz() {
+                    fetch("/quiz/salvar", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            fkUsuario: sessionStorage.ID_USUARIO,
+                            personagemFavorito: document.getElementById("favPersonagem").value,
+                            episodioAtual: document.getElementById("episodioAtual").value,
+                            personalidade: document.getElementById("personalidadeLuffy").value
+                        })
+                    }).then((res) => {
+                        if (res.ok) {
+                            alert("Quiz salvo!");
+
+                            sessionStorage.setItem("favPersonagem", document.getElementById("favPersonagem").value);
+                            sessionStorage.setItem("episodioAtual", document.getElementById("episodioAtual").value);
+                            sessionStorage.setItem("personalidadeLuffy", document.getElementById("personalidadeLuffy").value);
+                            atualizarKPIs();
+
+                            carregarPersonalidade();
+                            gerarGraficoArcos(Number(sessionStorage.getItem("episodioAtual")));
+                            gerarGraficoProgresso(Number(sessionStorage.getItem("episodioAtual")));
+                            gerarGraficoProgresso(Number(sessionStorage.getItem("episodioAtual")));
+
+                            fecharQuiz();
+
+                        } else {
+                            alert("Erro ao salvar quiz.");
+                        }
+                    });
+                }
+                function atualizarKPIs() {
+
+                    document.getElementById("kpi_personagem").innerHTML = `<strong>Personagem Favorito:</strong> <br>
+        ${sessionStorage.getItem("favPersonagem") || "Nenhum personagem favorito selecionado"}`;
+                    document.getElementById("kpi_episodio").innerHTML = `<strong>Episódio Atual:</strong> <br>
+        ${sessionStorage.getItem("episodioAtual") || "Nenhum episódio selecionado"}`;
+                    document.getElementById("kpi_personalidade").innerHTML = `<strong>Personalidade Mais Recente:</strong> <br>
+        ${sessionStorage.getItem("personalidadeLuffy") || "Nenhuma personalidade selecionada"}`;
+                }
+                function definirArco(episodio) {
+                    if (episodio >= 1 && episodio <= 61) {
+                        return "East Blue";
+                    } else if (episodio <= 143) {
+                        return "Alabasta";
+                    } else if (episodio <= 206) {
+                        return "Skypiea";
+                    } else if (episodio <= 228) {
+                        return "Davy Back Fight";
+                    } else if (episodio <= 263) {
+                        return "Water 7";
+                    } else if (episodio <= 336) {
+                        return "Enies Lobby";
+                    } else if (episodio <= 381) {
+                        return "Thriller Bark";
+                    } else if (episodio <= 407) {
+                        return "Sabaody Archipelago";
+                    } else if (episodio <= 421) {
+                        return "Amazon Lily";
+                    } else if (episodio <= 458) {
+                        return "Impel Down";
+                    } else if (episodio <= 516) {
+                        return "Marineford";
+                    } else if (episodio <= 578) {
+                        return "Fishman Island";
+                    } else if (episodio <= 628) {
+                        return "Punk Hazard";
+                    } else if (episodio <= 750) {
+                        return "Dresrossa";
+                    } else if (episodio <= 782) {
+                        return "Zou";
+                    } else if (episodio <= 891) {
+                        return "Whole Cake Island";
+                    } else if (episodio <= 1088) {
+                        return "Wano";
+                    } else if (episodio <= 1155) {
+                        return "Egghead";
+                    } else {
+                        return "Elbaph";
+                    }
+                }
+
+            </script>
 </body>
 
 </html>

@@ -85,7 +85,9 @@ body{
 
 
 .containerCadastro{
-    background-image: url(../assets/imgs/backgroundLogin.png);
+    background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('../assets/imgs/backgroundLogin.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -117,10 +119,11 @@ body{
 }
 .textoDireitaCad h1{
     font-size: 56px;
-    color: orange;
+    color: gold;
     letter-spacing: 4px;
     margin-bottom: 20px;
     text-shadow: 2px 2px 10px black;
+    -webkit-text-stroke: 1px orange;
 }
 .textoDireitaCad p{
     font-size: 20px;

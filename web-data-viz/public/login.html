@@ -44,7 +44,7 @@
 
     <div class="textoDireitaLogin">
       <h1>Bem-vindo de Volta!</h1>
-      <p>Entre novamente e continue explorando o universo de Luffy!</p>
+      <p>Entre novamente e continue sua jornada em busca do One Piece!</p>
     </div>
     <div class="textoEsquerdaLogin">
 
@@ -104,8 +104,8 @@
             console.log(json);
 
             sessionStorage.EMAIL_USUARIO = json.email;
-            sessionStorage.NOME_USUARIO = json.nome;
-            sessionStorage.ID_USUARIO = json.idUsuario;
+            sessionStorage.NOME_USUARIO = json.nome || json.nomeUsuario;
+            sessionStorage.ID_USUARIO = json.id || json.idUsuario;
 
             alert("Login realizado com sucesso!");
 

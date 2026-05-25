@@ -87,3 +87,69 @@ body{
 .hover{
     color: orange
 }
+/* ÁREA DOS GRÁFICOS */
+.graficos-inferiores{
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+    justify-content:center;
+    flex-wrap:wrap;
+    width:100%;
+}
+
+
+.grafico-card{
+    background:#111;
+    border:2px solid gold;
+    border-radius:16px;
+    padding:20px;
+}
+
+.graficos-inferiores .grafico-card:first-child{
+    width:65%;
+    height:420px;
+}
+
+.graficos-inferiores .grafico-card:last-child{
+    width:30%;
+    min-width:320px;
+    height:420px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(180deg,#111,#1a1a1a);
+
+    border:2px solid gold;
+
+    box-shadow:
+    0 0 20px rgba(255,215,0,0.2);
+
+    transition:0.3s;
+}
+.graficos-inferiores .grafico-card:last-child:hover{
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 0 30px rgba(255,215,0,0.35);
+}
+.graficos-inferiores .grafico-card:last-child h2{
+    color:gold;
+
+    margin-bottom:10px;
+
+    letter-spacing:1px;
+
+    text-shadow:
+    0 0 10px rgba(255,215,0,0.5);
+}
+#b_usuario{
+    color: gold !important;
+    font-weight: 800 !important;
+    text-shadow: 0 0 6px rgba(255,215,0,0.6);
+}
+.hello h3{
+    color: white !important;
+}
