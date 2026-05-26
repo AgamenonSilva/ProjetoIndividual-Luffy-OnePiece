@@ -597,7 +597,7 @@ canvas {
 }
 
 .area-graficos {
-  display: grid;
+  display: flex;
   grid-template-columns: 2fr 1fr;
   gap: 25px;
   margin-top: 40px;
@@ -645,3 +645,28 @@ canvas {
 
   font-size: 24px;
 }
+.grafico-card2{
+  background: rgba(0, 0, 0, 0.80);
+  border: 2px solid rgba(255,215,0,0.15);
+  border-radius: 30px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  }
+.grafico-card2 h2{
+    color: gold;
+  margin-bottom: 20px;
+  font-family: 'Times New Roman', serif;
+  letter-spacing: 2px;
+  }
+  #graficoPersonalidade{
+    margin-bottom: 150px;
+  }
+  .botoesQuiz{
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .botoesQuiz button{
+    flex: 1;
+  }

@@ -30,9 +30,24 @@ function estatisticas(idUsuario) {
 
     return database.executar(sql, [idUsuario]);
 }
+function buscarHistorico(fkUsuario) {
+
+    let instrucaoSql = `
+        SELECT 
+            episodioAtual,
+            DATE_FORMAT(dataResposta, '%d/%m') AS data
+        FROM quiz
+        WHERE fkUsuario = ${fkUsuario}
+        ORDER BY dataResposta;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+    return database.executar(instrucaoSql);
+}
 
 module.exports = {
     salvarQuiz,
     buscarUltimoQuiz,
-    estatisticas
+    estatisticas,
+    buscarHistorico
 };

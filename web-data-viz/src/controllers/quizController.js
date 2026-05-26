@@ -15,6 +15,22 @@ function buscarUltimoQuiz(req, res) {
         .then(resultado => res.json(resultado))
         .catch(err => res.status(500).json(err));
 }
+function buscarHistorico(req, res) {
+
+    let fkUsuario = req.params.fkUsuario;
+
+    quizModel.buscarHistorico(fkUsuario)
+        .then(function(resultado) {
+
+            res.json(resultado);
+
+        }).catch(function(erro) {
+
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+
+        });
+}
 function estatisticas(req, res) {
 
     const idUsuario = req.params.idUsuario;
@@ -32,5 +48,6 @@ function estatisticas(req, res) {
 module.exports = {
     salvarQuiz,
     buscarUltimoQuiz,
-    estatisticas
+    estatisticas,
+    buscarHistorico
 };

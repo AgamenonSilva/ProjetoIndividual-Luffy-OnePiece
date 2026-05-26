@@ -2,15 +2,14 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/imgs/logo.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Dashboards</title>
+    <title>Luffy | Dashboards</title>
 
 
     <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -32,28 +31,23 @@
         <div class="header-left">
             <h1>Monkey D. Luffy</h1>
 
-            <div class="hello">
+            <div class="titulo">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
             </div>
 
             <div class="btn-nav-white" onclick="abrirQuiz()">
                 <h3>Quiz</h3>
             </div>
-
-            <div class="btn-nav">
-
-                <h3>Progresso</h3>
-
-            </div>
-
             <div class="btn-nav-white">
-                <a href="./mural.html">
+                <a href="">
                     <h3>Coleção de Cenas</h3>
                 </a>
             </div>
 
             <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
+                <a href="index.html">
+                    <h3>Sair</h3>
+                </a>
             </div>
 
         </div>
@@ -65,7 +59,7 @@
                 <div id="kpi_personalidade"></div>
             </div>
             <div class="area-graficos">
-                <div class="grafico-card">
+                <div class="grafico-card Personalidade">
                     <h2>Progresso na Jornada</h2>
                     <canvas id="graficoProgresso"></canvas>
                 </div>
@@ -100,31 +94,31 @@
 
                     <div class="quiz-campo">Personalidade do Luffy</div>
                     <select id="personalidadeLuffy">
-                        <option value="ALEGRE">Alegre</option>
-                        <option value="CORAJOSO">Corajoso</option>
-                        <option value="LEAL">Leal</option>
-                        <option value="TEIMOSO">Teimoso</option>
-                        <option value="IMPULSIVO">Impulsivo</option>
-                        <option value="DETERMINADO">Determinado</option>
+                        <option value="Alegre">Alegre</option>
+                        <option value="Corajoso">Corajoso</option>
+                        <option value="Leal">Leal</option>
+                        <option value="Teimoso">Teimoso</option>
+                        <option value="Impulsivo">Impulsivo</option>
+                        <option value="Determinado">Determinado</option>
                         <option value="PROTETOR">Protetor da tripulação</option>
                     </select>
-
-                    <button onclick="salvarQuiz()">Salvar Dados</button>
-                    <button onclick="fecharQuiz()" style="background:red;">Fechar</button>
-
+                    <div class="botoesQuiz">
+                        <button onclick="salvarQuiz()">Salvar Dados</button>
+                        <button onclick="fecharQuiz()" style="background:red;">Fechar</button>
+                    </div>
                 </div>
 
             </div>
-            <div class="graficos-inferiores">
+            <div class="area-graficos">
 
                 <div class="grafico-card">
                     <h2>Progresso por Arco</h2>
                     <canvas id="graficoArcos"></canvas>
                 </div>
 
-                <div class="grafico-card">
+                <div class="grafico-card2">
                     <h2>Perfil do Pirata</h2>
-                    <canvas id="graficoPersonalidade" width="200" height="200"></canvas>
+                    <canvas id="graficoPersonalidade"></canvas>
                 </div>
             </div>
             <script>
@@ -132,17 +126,23 @@
                     sessionStorage.NOME_USUARIO;
 
                 let proximaAtualizacao;
+                let chartProgresso;
+                let chartArcos;
+                let chartPersonalidade;
 
-                window.onload = function () {
+                window.onload = carregarGraficos;
+
+                function carregarGraficos() {
                     atualizarKPIs();
-                    let episodio = Number(sessionStorage.getItem("episodioAtual"));
+                    let episodio =
+                        Number(sessionStorage.getItem("episodioAtual"));
+
                     if (episodio) {
-                        gerarGraficoProgresso(episodio);
                         gerarGraficoArcos(episodio);
                     }
-
+                    buscarHistorico();
                     carregarPersonalidade();
-                };
+                }
                 // O gráfico é construído com três funções:
                 // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
                 // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
@@ -154,162 +154,152 @@
 
                 //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
                 //     Para ajustar o "select", ajuste o comando sql em src/models
-                let chartProgresso;
-                function gerarGraficoProgresso(episodioAtual) {
-
+                function gerarGraficoProgresso(resposta) {
+                    let ultimoEpisodio =
+                        resposta[resposta.length - 1].episodioAtual;
                     let episodiosTotais = 1155;
-                    let restante = episodiosTotais - episodioAtual;
+
+                    let restante = episodiosTotais - ultimoEpisodio;
+
                     document.getElementById("texto_arco").innerHTML =
-                        definirArco(episodioAtual);
+                        definirArco(ultimoEpisodio);
 
                     document.getElementById("texto_restante").innerHTML =
                         restante + " episódios";
-                    let dados = [];
+
                     let labels = [];
 
-                    for (let i = 1; i <= episodioAtual; i += 50) {
+                    let dados = {
+                        labels: labels,
 
-                        labels.push("Ep " + i);
+                        datasets: [{
+                            label: 'Episódios Assistidos',
+                            data: [],
+                            fill: true,
+                            borderColor: 'gold',
+                            backgroundColor: 'rgba(255,215,0,0.2)',
+                            tension: 0.4
+                        }]
+                    };
 
-                        dados.push(i);
+                    for (let i = 0; i < resposta.length; i++) {
 
+                        labels.push(resposta[i].data);
+
+                        dados.datasets[0].data.push(
+                            resposta[i].episodioAtual
+                        );
                     }
 
                     labels.push("Atual");
-                    dados.push(episodioAtual);
 
-                    if (chartProgresso) {
-                        chartProgresso.destroy();
+                    dados.datasets[0].data.push(ultimoEpisodio);
+
+                    if (chartProgresso == undefined) {
+                        const config = {
+                            type: 'line',
+                            data: dados
+                        };
+                        chartProgresso = new Chart(
+                            document.getElementById("graficoProgresso"),
+                            config
+                        );
+
+                    } else {
+                        chartProgresso.data.labels = dados.labels;
+                        chartProgresso.data.datasets[0].data =
+                            dados.datasets[0].data;
+                        chartProgresso.update();
                     }
-
-                    chartProgresso = new Chart(document.getElementById("graficoProgresso"), {
-
-                        type: 'line',
-
-                        data: {
-
-                            labels: labels,
-
-                            datasets: [{
-                                label: 'Episódios Assistidos',
-                                data: dados,
-                                borderColor: 'gold',
-                                backgroundColor: 'rgba(255,215,0,0.2)',
-                                fill: true,
-                                tension: 0.4,
-                                borderWidth: 4,
-                                pointBackgroundColor: '#fff',
-                                pointBorderColor: 'gold',
-                                pointRadius: 5
-
-                            }]
-                        },
-                        options: {
-
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    labels: {
-                                        color: 'white'
-                                    }
-                                }
-                            },
-
-                            scales: {
-                                x: {
-                                    ticks: {
-                                        color: 'white'
-                                    }
-                                },
-
-                                y: {
-                                    ticks: {
-                                        color: 'white'
-                                    }
-                                }
-
-                            }
-
-                        }
-
-                    });
-
                 }
-                let chartPersonalidade;
 
-                function gerarGraficoPersonalidade(dados) {
+                function gerarGraficoPersonalidade(resposta) {
 
-                    let labels = dados.map(d => d.personalidade);
-                    let valores = dados.map(d => d.total);
+                    let labels = [];
 
-                    if (chartPersonalidade) {
-                        chartPersonalidade.destroy();
+                    let dados = {
+                        labels: labels,
+
+                        datasets: [{
+                            label: 'Personalidades do Luffy',
+                            data: [],
+                            backgroundColor: 'rgba(255,215,0,0.2)',
+                            borderColor: 'gold',
+                            borderWidth: 1,
+                            pointBorderColor: 'gold',
+                            pointRadius: 3,
+                            pointBackgroundColor: 'white'
+                        }]
+                    };
+
+                    for (let i = 0; i < resposta.length; i++) {
+
+                        labels.push(resposta[i].personalidade);
+
+                        dados.datasets[0].data.push(resposta[i].total);
                     }
 
-                    chartPersonalidade = new Chart(
-                        document.getElementById("graficoPersonalidade"),
-                        {
+                    if (chartPersonalidade == undefined) {
+                        const config = {
                             type: 'radar',
-
-                            data: {
-                                labels: labels,
-
-                                datasets: [{
-                                    label: 'Personalidades do Luffy',
-                                    data: valores,
-
-                                    backgroundColor: 'rgba(255,215,0,0.25)',
-                                    borderColor: 'gold',
-                                    borderWidth: 5,
-                                    pointBackgroundColor: '#fff',
-                                    pointBorderColor: 'gold',
-                                    pointRadius: 5
-                                }]
-                            },
-
+                            data: dados,
                             options: {
-
                                 responsive: true,
 
                                 plugins: {
                                     legend: {
                                         labels: {
-                                            color: 'white'
+                                            color: "white",
+                                            font: {
+                                                size: 12
+                                            }
                                         }
                                     }
                                 },
 
                                 scales: {
                                     r: {
-                                        suggestedMin: 0,
-                                        suggestedMax: 5,
-
+                                        min: 0,
+                                        max: 5,
                                         angleLines: {
-                                            color: 'rgba(255,255,255,0.2)'
+                                            color: "rgba(255, 255, 255, 0.1)"
                                         },
 
                                         grid: {
-                                            color: 'rgba(255,255,255,0.2)'
+                                            color: "rgba(255, 255, 255, 0.1)"
                                         },
 
                                         pointLabels: {
-                                            color: 'white',
+                                            color: "white",
                                             font: {
-                                                size: 20
+                                                size: 10
                                             }
                                         },
 
                                         ticks: {
-                                            color: 'white',
-                                            backdropColor: 'transparent'
+                                            color: "gold",
+                                            backdropColor: "transparent",
+                                            font: {
+                                                size: 5
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    );
+                        };
+                        chartPersonalidade = new Chart(
+                            document.getElementById("graficoPersonalidade"),
+                            config
+                        );
+                    } else {
+                        chartPersonalidade.data.labels =
+                            dados.labels;
+                        chartPersonalidade.data.datasets[0].data =
+                            dados.datasets[0].data;
+
+                        chartPersonalidade.update();
+                    }
                 }
-                let chartArcos;
 
                 function gerarGraficoArcos(episodioAtual) {
 
@@ -318,9 +308,12 @@
                         { nome: "East Blue", inicio: 1, fim: 61 },
                         { nome: "Alabasta", inicio: 62, fim: 143 },
                         { nome: "Skypiea", inicio: 144, fim: 206 },
+                        { nome: "Davy Back Fight", inicio: 207, fim: 228 },
                         { nome: "Water 7", inicio: 229, fim: 263 },
                         { nome: "Enies Lobby", inicio: 264, fim: 336 },
                         { nome: "Thriller Bark", inicio: 337, fim: 381 },
+                        { nome: "Sabaody Archipelago", inicio: 382, fim: 407 },
+                        { nome: "Amazon Lily", inicio: 382, fim: 407 },
                         { nome: "Marineford", inicio: 408, fim: 516 },
                         { nome: "Dressrosa", inicio: 579, fim: 750 },
                         { nome: "Whole Cake", inicio: 783, fim: 891 },
@@ -330,29 +323,33 @@
                     ];
 
                     let labels = [];
-                    let progresso = [];
 
-                    for (let arco of arcos) {
+                    let dados = {
+                        labels: labels,
 
-                        labels.push(arco.nome);
+                        datasets: [{
+                            label: 'Conclusão do Arco (%)',
+                            data: [],
+                            backgroundColor: [],
+                            borderRadius: 10
+                        }]
+                    };
 
+                    for (let i = 0; i < arcos.length; i++) {
+                        dados.labels.push(arcos[i].nome);
                         let porcentagem = 0;
-
-                        if (episodioAtual >= arco.fim) {
-
+                        if (episodioAtual >= arcos[i].fim) {
                             porcentagem = 100;
-
-                        }
-
-                        else if (
-                            episodioAtual >= arco.inicio &&
-                            episodioAtual < arco.fim
+                        } else if (
+                            episodioAtual >= arcos[i].inicio &&
+                            episodioAtual < arcos[i].fim
                         ) {
 
-                            let totalArco = arco.fim - arco.inicio;
+                            let totalArco =
+                                arcos[i].fim - arcos[i].inicio;
 
                             let progressoAtual =
-                                episodioAtual - arco.inicio;
+                                episodioAtual - arcos[i].inicio;
 
                             porcentagem =
                                 (progressoAtual / totalArco) * 100;
@@ -363,89 +360,112 @@
                             porcentagem = 0;
                         }
 
-                        progresso.push(porcentagem);
+                        dados.datasets[0].data.push(porcentagem);
+
+                        if (porcentagem >= 100) {
+                            dados.datasets[0].backgroundColor.push("#22c55e");
+                        } else if (porcentagem > 0) {
+                            dados.datasets[0].backgroundColor.push("#facc15");
+                        } else {
+                            dados.datasets[0].backgroundColor.push("#374151");
+                        }
                     }
 
-                    if (chartArcos) {
-                        chartArcos.destroy();
-                    }
+                    if (chartArcos == undefined) {
 
-                    chartArcos = new Chart(
-                        document.getElementById("graficoArcos"),
-                        {
+                        const config = {
                             type: 'bar',
-
-                            data: {
-                                labels: labels,
-
-                                datasets: [{
-                                    label: 'Conclusão do Arco (%)',
-                                    data: progresso,
-
-                                    backgroundColor: progresso.map(valor => {
-
-                                        if (valor >= 100) {
-                                            return "#22c55e";
-                                        }
-
-                                        if (valor > 0) {
-                                            return "#facc15";
-                                        }
-
-                                        return "#374151";
-                                    }),
-
-                                    borderRadius: 8,
-                                    barThickness: 14
-                                }]
-                            },
-
+                            data: dados,
                             options: {
-
                                 indexAxis: 'y',
-
                                 responsive: true,
-
-
                                 plugins: {
                                     legend: {
                                         labels: {
-                                            color: 'white'
+                                            color: "white",
+                                            font: {
+                                                size: 12
+                                            }
                                         }
                                     }
                                 },
-
                                 scales: {
-
                                     x: {
                                         max: 100,
-
+                                        grid: {
+                                            color: "rgba(255, 255, 255, 0.1)"
+                                        },
                                         ticks: {
-                                            color: 'white',
-
-                                            callback: value => value + "%"
+                                            color: "gold",
+                                            font: {
+                                                size: 10
+                                            },
+                                            callback: function (value) {
+                                                return value + "%";
+                                            }
                                         }
                                     },
-
                                     y: {
+                                        grid: {
+                                            display: false
+                                        },
                                         ticks: {
-                                            color: 'white',
+                                            color: "white",
                                             font: {
-                                                size: 11
+                                                size: 10
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                    );
+                        };
+                        chartArcos = new Chart(
+                            document.getElementById("graficoArcos"),
+                            config
+                        );
+                    } else {
+                        chartArcos.data.labels =
+                            dados.labels;
+                        chartArcos.data.datasets[0].data =
+                            dados.datasets[0].data;
+                        chartArcos.data.datasets[0].backgroundColor =
+                            dados.datasets[0].backgroundColor;
+
+                        chartArcos.update();
+                    }
                 }
                 function carregarPersonalidade() {
 
                     fetch(`/quiz/estatisticas/${sessionStorage.ID_USUARIO}`)
-                        .then(res => res.json())
-                        .then(dados => {
-                            gerarGraficoPersonalidade(dados);
+                        .then(function (response) {
+                            if (response.ok) {
+                                response.json().then(function (dados) {
+                                    gerarGraficoPersonalidade(dados);
+                                });
+                            } else {
+                                console.log("Erro ao buscar dados");
+                            }
+
+                        });
+                }
+                function buscarHistorico() {
+
+                    fetch(`/quiz/historico/${sessionStorage.ID_USUARIO}`)
+                        .then(function (response) {
+
+                            if (response.ok) {
+
+                                response.json().then(function (resposta) {
+
+                                    gerarGraficoProgresso(resposta);
+
+                                });
+
+                            } else {
+
+                                console.log("Erro ao buscar histórico");
+
+                            }
                         });
                 }
                 // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
@@ -477,7 +497,7 @@
                             episodioAtual: document.getElementById("episodioAtual").value,
                             personalidade: document.getElementById("personalidadeLuffy").value
                         })
-                    }).then((res) => {
+                    }).then(function (res) {
                         if (res.ok) {
                             alert("Quiz salvo!");
 
@@ -487,9 +507,7 @@
                             atualizarKPIs();
 
                             carregarPersonalidade();
-                            gerarGraficoArcos(Number(sessionStorage.getItem("episodioAtual")));
-                            gerarGraficoProgresso(Number(sessionStorage.getItem("episodioAtual")));
-                            gerarGraficoProgresso(Number(sessionStorage.getItem("episodioAtual")));
+                            carregarGraficos();
 
                             fecharQuiz();
 
