@@ -29,7 +29,11 @@
 
     <div class="janela">
         <div class="header-left">
-            <h1>Monkey D. Luffy</h1>
+            <div class="logo-area">
+                <img src="../assets/imgs/logoOnePiece.png" class="logo-onepiece">
+
+                <h1>Monkey D. Luffy</h1>
+            </div>
 
             <div class="titulo">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
@@ -38,12 +42,6 @@
             <div class="btn-nav-white" onclick="abrirQuiz()">
                 <h3>Quiz</h3>
             </div>
-            <div class="btn-nav-white">
-                <a href="">
-                    <h3>Coleção de Cenas</h3>
-                </a>
-            </div>
-
             <div class="btn-logout" onclick="limparSessao()">
                 <a href="index.html">
                     <h3>Sair</h3>
@@ -59,7 +57,7 @@
                 <div id="kpi_personalidade"></div>
             </div>
             <div class="area-graficos">
-                <div class="grafico-card Personalidade">
+                <div class="grafico-card">
                     <h2>Progresso na Jornada</h2>
                     <canvas id="graficoProgresso"></canvas>
                 </div>
@@ -75,6 +73,9 @@
                             <strong>Episódios Restantes</strong><br>
                             <span id="texto_restante"></span>
                         </p>
+
+                        <img src="../assets/imgs/luffyDireita.png" class="luffy-direita">
+
                     </div>
                 </div>
             </div>
@@ -100,7 +101,7 @@
                         <option value="Teimoso">Teimoso</option>
                         <option value="Impulsivo">Impulsivo</option>
                         <option value="Determinado">Determinado</option>
-                        <option value="PROTETOR">Protetor da tripulação</option>
+                        <option value="Protetor">Protetor da tripulação</option>
                     </select>
                     <div class="botoesQuiz">
                         <button onclick="salvarQuiz()">Salvar Dados</button>
@@ -313,13 +314,16 @@
                         { nome: "Enies Lobby", inicio: 264, fim: 336 },
                         { nome: "Thriller Bark", inicio: 337, fim: 381 },
                         { nome: "Sabaody Archipelago", inicio: 382, fim: 407 },
-                        { nome: "Amazon Lily", inicio: 382, fim: 407 },
-                        { nome: "Marineford", inicio: 408, fim: 516 },
-                        { nome: "Dressrosa", inicio: 579, fim: 750 },
+                        { nome: "Amazon Lily", inicio: 408, fim: 421 },
+                        { nome: "Impel Down", inicio: 422, fim: 458 },
+                        { nome: "Marineford", inicio: 459, fim: 516 },
+                        { nome: "Fishman Island", inicio: 517, fim: 578 },
+                        { nome: "Punk Hazard", inicio: 579, fim: 628 },
+                        { nome: "Dresrossa", inicio: 629, fim: 750 },
+                        { nome: "Zou", inicio: 751, fim: 782 },
                         { nome: "Whole Cake", inicio: 783, fim: 891 },
                         { nome: "Wano", inicio: 892, fim: 1088 },
                         { nome: "Egghead", inicio: 1089, fim: 1155 }
-
                     ];
 
                     let labels = [];
